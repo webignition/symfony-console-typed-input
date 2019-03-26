@@ -13,12 +13,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "webignition\\SymfonyConsoleTypedInput\\": "src/"
+            "webignition\\SymfonyConsole\\TypedInput\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "webignition\\SymfonyConsoleTypedInput\\Tests\\": "tests/"
+            "webignition\\SymfonyConsole\\TypedInput\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -32,12 +32,14 @@
         ]
     },
     "require": {
-        "php": ">=7.2.0"
+        "php": ">=7.2.0",
+        "symfony/console": "^4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",
         "squizlabs/php_codesniffer": "^3",
-        "phpstan/phpstan": "^0.11.4"
+        "phpstan/phpstan": "^0.11.4",
+        "mockery/mockery": "^1.2"
     },
     "minimum-stability":"stable",
     "prefer-stable":true
