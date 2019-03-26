@@ -145,6 +145,29 @@ class TypedInput implements InputInterface
         return $this->input->getOption($name);
     }
 
+    public function getIntegerOption($name): int
+    {
+        $argument = $this->getOption($name);
+
+        if (is_array($argument)) {
+            return (int) !empty($argument);
+        }
+
+        return (int) $argument;
+    }
+
+    public function getBooleanOption($name): ?bool
+    {
+        $argument = $this->getOption($name);
+
+        if (is_array($argument)) {
+            return !empty($argument);
+        }
+
+        return (bool) $argument;
+    }
+
+
     /**
      * @param string $name The option name
      * @param string|string[]|bool|null $value The option value

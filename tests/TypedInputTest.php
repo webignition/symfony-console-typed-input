@@ -21,92 +21,153 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @dataProvider getIntegerArgumentDataProvider
+     * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerArgument($source, int $expectedArgument)
+    public function testGetIntegerArgument($source, int $expectedValue)
+    {
+        $this->assertGetIntegerValue(
+            'getArgument',
+            $source,
+            $expectedValue,
+            function (TypedInput $typedInput) {
+                return $typedInput->getIntegerArgument('name');
+            }
+        );
+    }
+
+    /**
+     * @dataProvider getIntegerValueDataProvider
+     */
+    public function testGetIntegerOption($source, int $expectedValue)
+    {
+        $this->assertGetIntegerValue(
+            'getOption',
+            $source,
+            $expectedValue,
+            function (TypedInput $typedInput) {
+                return $typedInput->getIntegerOption('name');
+            }
+        );
+    }
+
+    private function assertGetIntegerValue(string $mockedMethodName, $source, int $expectedValue, callable $valueGetter)
     {
         $name = 'name';
 
         $input = \Mockery::mock(InputInterface::class);
         $input
-            ->shouldReceive('getArgument')
+            ->shouldReceive($mockedMethodName)
             ->with($name)
             ->andReturn($source);
 
         $typedInput = new TypedInput($input);
 
-        $argument = $typedInput->getIntegerArgument($name);
+        $value = $valueGetter($typedInput);
 
-        $this->assertIsInt($argument);
-        $this->assertEquals($expectedArgument, $argument);
+        $this->assertIsInt($value);
+        $this->assertEquals($expectedValue, $value);
     }
 
-    public function getIntegerArgumentDataProvider(): array
+    public function getIntegerValueDataProvider(): array
     {
         return [
             'int' => [
                 'source' => 100,
-                'expectedArgument' => 100,
+                'expectedValue' => 100,
             ],
             'integer string' => [
                 'source' => (string) 99,
-                'expectedArgument' => 99,
+                'expectedValue' => 99,
             ],
             'non-integer string' => [
                 'source' => 'string',
-                'expectedArgument' => 0,
+                'expectedValue' => 0,
             ],
             'empty array' => [
                 'source' => [],
-                'expectedArgument' => 0,
+                'expectedValue' => 0,
             ],
             'non-empty array' => [
                 'source' => [1],
-                'expectedArgument' => 1,
+                'expectedValue' => 1,
             ],
         ];
     }
 
     /**
-     * @dataProvider getBooleanArgumentDataProvider
+     * @dataProvider getBooleanValueDataProvider
      */
-    public function testGetBooleanArgument($source, bool $expectedArgument)
+    public function testGetBooleanArgument($source, bool $expectedValue)
     {
+        $this->assertGetBooleanValue(
+            'getArgument',
+            $source,
+            $expectedValue,
+            function (TypedInput $typedInput) {
+                return $typedInput->getBooleanArgument('name');
+            }
+        );
+    }
+
+    /**
+     * @dataProvider getBooleanValueDataProvider
+     */
+    public function testGetBooleanOption($source, bool $expectedValue)
+    {
+        $this->assertGetBooleanValue(
+            'getOption',
+            $source,
+            $expectedValue,
+            function (TypedInput $typedInput) {
+                return $typedInput->getBooleanOption('name');
+            }
+        );
+    }
+
+    private function assertGetBooleanValue(
+        string $mockedMethodName,
+        $source,
+        bool $expectedValue,
+        callable $valueGetter
+    ) {
         $name = 'name';
 
         $input = \Mockery::mock(InputInterface::class);
         $input
-            ->shouldReceive('getArgument')
+            ->shouldReceive($mockedMethodName)
             ->with($name)
             ->andReturn($source);
 
         $typedInput = new TypedInput($input);
 
-        $this->assertEquals($expectedArgument, $typedInput->getBooleanArgument($name));
+        $value = $valueGetter($typedInput);
+
+        $this->assertIsBool($value);
+        $this->assertEquals($expectedValue, $value);
     }
 
-    public function getBooleanArgumentDataProvider(): array
+    public function getBooleanValueDataProvider(): array
     {
         return [
             'empty array' => [
                 'source' => [],
-                'expectedArgument' => false,
+                'expectedValue' => false,
             ],
             'non-empty array' => [
                 'source' => [1],
-                'expectedArgument' => true,
+                'expectedValue' => true,
             ],
             'string "0"' => [
                 'source' => '0',
-                'expectedArgument' => false,
+                'expectedValue' => false,
             ],
             'string "1"' => [
                 'source' => '1',
-                'expectedArgument' => true,
+                'expectedValue' => true,
             ],
             'string "100"' => [
                 'source' => '100',
-                'expectedArgument' => true,
+                'expectedValue' => true,
             ],
         ];
     }
