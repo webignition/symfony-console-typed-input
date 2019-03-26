@@ -12,9 +12,9 @@ public function getIntegerArgument(string $name): int;
 public function getIntegerOption(string $name): int;
 public function getBooleanArgument(string $name): bool;
 public function getBooleanOption(string $name): bool;
+```
 
 All other `InputInterface` method calls are proxied to the wrapped `InputInterface` instance.
-```
 
 ## Usage
 
