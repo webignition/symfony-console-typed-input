@@ -20,7 +20,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
      */
     private $typedInput;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -69,7 +69,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($option, $this->typedInput->getParameterOption($values, $default, $onlyParams));
     }
 
-     public function testBind()
+    public function testBind()
     {
         $inputDefinition = \Mockery::mock(InputDefinition::class);
 
@@ -213,7 +213,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
