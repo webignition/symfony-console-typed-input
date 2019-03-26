@@ -6,6 +6,15 @@ argument and option getters.
 For fans of strongly-typed PHP, or just those tired of battling with [phpstan](https://github.com/phpstan/phpstan)
 `--level max` when analysing Symfony console commands.
 
+Adds:
+```php
+public function getIntegerArgument(string $name): int;
+public function getIntegerOption(string $name): int;
+public function getBooleanArgument(string $name): bool;
+public function getBooleanOption(string $name): bool;
+
+All other `InputInterface` method calls are proxied to the wrapped `InputInterface` instance.
+
 # Usage
 
 ```php
