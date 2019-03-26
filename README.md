@@ -6,7 +6,7 @@ argument and option getters.
 For fans of strongly-typed PHP, or just those tired of battling with [phpstan](https://github.com/phpstan/phpstan)
 `--level max` when analysing Symfony console commands.
 
-Adds:
+# Methods
 ```php
 public function getIntegerArgument(string $name): int;
 public function getIntegerOption(string $name): int;
