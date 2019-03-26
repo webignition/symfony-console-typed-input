@@ -82,7 +82,7 @@ class TypedInput implements InputInterface
         return $this->input->getArgument($name);
     }
 
-    public function getIntegerArgument($name): int
+    public function getIntegerArgument(string $name): int
     {
         $argument = $this->getArgument($name);
 
@@ -93,7 +93,7 @@ class TypedInput implements InputInterface
         return (int) $argument;
     }
 
-    public function getBooleanArgument($name): ?bool
+    public function getBooleanArgument(string $name): ?bool
     {
         $argument = $this->getArgument($name);
 
@@ -145,7 +145,7 @@ class TypedInput implements InputInterface
         return $this->input->getOption($name);
     }
 
-    public function getIntegerOption($name): int
+    public function getIntegerOption(string $name): int
     {
         $argument = $this->getOption($name);
 
@@ -156,7 +156,7 @@ class TypedInput implements InputInterface
         return (int) $argument;
     }
 
-    public function getBooleanOption($name): ?bool
+    public function getBooleanOption(string $name): ?bool
     {
         $argument = $this->getOption($name);
 
