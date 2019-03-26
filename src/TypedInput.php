@@ -82,6 +82,28 @@ class TypedInput implements InputInterface
         return $this->input->getArgument($name);
     }
 
+    public function getIntegerArgument($name): int
+    {
+        $argument = $this->getArgument($name);
+
+        if (is_array($argument)) {
+            return (int) !empty($argument);
+        }
+
+        return (int) $argument;
+    }
+
+    public function getBooleanArgument($name): ?bool
+    {
+        $argument = $this->getArgument($name);
+
+        if (is_array($argument)) {
+            return !empty($argument);
+        }
+
+        return (bool) $argument;
+    }
+
     /**
      * @param string $name The argument name
      * @param string|string[]|null $value The argument value
