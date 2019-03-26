@@ -3,10 +3,7 @@
 
 namespace webignition\SymfonyConsole\TypedInput\Tests;
 
-use Mockery\MockInterface;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputInterface;
 use webignition\SymfonyConsole\TypedInput\TypedInput;
 
 class TypedInputTest extends \PHPUnit\Framework\TestCase
