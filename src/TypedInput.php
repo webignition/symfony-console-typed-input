@@ -92,13 +92,7 @@ class TypedInput implements InputInterface
 
     public function getBooleanArgument(string $name): ?bool
     {
-        $argument = $this->getArgument($name);
-
-        if (is_array($argument)) {
-            return !empty($argument);
-        }
-
-        return (bool) $argument;
+        return $this->getBooleanValue($this->getArgument($name));
     }
 
     /**
@@ -152,13 +146,7 @@ class TypedInput implements InputInterface
 
     public function getBooleanOption(string $name): ?bool
     {
-        $option = $this->getOption($name);
-
-        if (is_array($option)) {
-            return !empty($option);
-        }
-
-        return (bool) $option;
+        return $this->getBooleanValue($this->getOption($name));
     }
 
 
@@ -210,5 +198,14 @@ class TypedInput implements InputInterface
         }
 
         return (int) $value;
+    }
+
+    private function getBooleanValue($value): ?bool
+    {
+        if (is_array($value)) {
+            return !empty($value);
+        }
+
+        return (bool) $value;
     }
 }
