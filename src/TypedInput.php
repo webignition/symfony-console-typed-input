@@ -82,15 +82,12 @@ class TypedInput implements InputInterface
         return $this->input->getArgument($name);
     }
 
-    public function getIntegerArgument(string $name): int
+    public function getIntegerArgument(string $name, int $default = null): int
     {
-        $argument = $this->getArgument($name);
-
-        if (is_array($argument)) {
-            return (int) !empty($argument);
-        }
-
-        return (int) $argument;
+        return $this->getIntegerValue(
+            $this->getArgument($name),
+            $default
+        );
     }
 
     public function getBooleanArgument(string $name): ?bool
@@ -145,26 +142,23 @@ class TypedInput implements InputInterface
         return $this->input->getOption($name);
     }
 
-    public function getIntegerOption(string $name): int
+    public function getIntegerOption(string $name, int $default = null): int
     {
-        $argument = $this->getOption($name);
-
-        if (is_array($argument)) {
-            return (int) !empty($argument);
-        }
-
-        return (int) $argument;
+        return $this->getIntegerValue(
+            $this->getOption($name),
+            $default
+        );
     }
 
     public function getBooleanOption(string $name): ?bool
     {
-        $argument = $this->getOption($name);
+        $option = $this->getOption($name);
 
-        if (is_array($argument)) {
-            return !empty($argument);
+        if (is_array($option)) {
+            return !empty($option);
         }
 
-        return (bool) $argument;
+        return (bool) $option;
     }
 
 
@@ -203,5 +197,18 @@ class TypedInput implements InputInterface
     public function setInteractive($interactive)
     {
         $this->input->setInteractive($interactive);
+    }
+
+    private function getIntegerValue($value, int $default = null): int
+    {
+        if (!is_int($value) && !ctype_digit($value) && null !== $default) {
+            return $default;
+        }
+
+        if (is_array($value)) {
+            return (int) !empty($value);
+        }
+
+        return (int) $value;
     }
 }
