@@ -23,14 +23,15 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerArgument($source, int $expectedValue)
+    public function testGetIntegerArgument($source, ?int $default, int $expectedValue)
     {
         $this->assertGetIntegerValue(
             'getArgument',
             $source,
+            $default,
             $expectedValue,
-            function (TypedInput $typedInput) {
-                return $typedInput->getIntegerArgument('name');
+            function (TypedInput $typedInput, ?int $default) {
+                return $typedInput->getIntegerArgument('name', $default);
             }
         );
     }
@@ -38,20 +39,26 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerOption($source, int $expectedValue)
+    public function testGetIntegerOption($source, ?int $default, $expectedValue)
     {
         $this->assertGetIntegerValue(
             'getOption',
             $source,
+            $default,
             $expectedValue,
-            function (TypedInput $typedInput) {
-                return $typedInput->getIntegerOption('name');
+            function (TypedInput $typedInput, ?int $default) {
+                return $typedInput->getIntegerOption('name', $default);
             }
         );
     }
 
-    private function assertGetIntegerValue(string $mockedMethodName, $source, int $expectedValue, callable $valueGetter)
-    {
+    private function assertGetIntegerValue(
+        string $mockedMethodName,
+        $source,
+        ?int $default,
+        int $expectedValue,
+        callable $valueGetter
+    ) {
         $name = 'name';
 
         $input = \Mockery::mock(InputInterface::class);
@@ -62,7 +69,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
         $typedInput = new TypedInput($input);
 
-        $value = $valueGetter($typedInput);
+        $value = $valueGetter($typedInput, $default);
 
         $this->assertIsInt($value);
         $this->assertEquals($expectedValue, $value);
@@ -73,23 +80,43 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
         return [
             'int' => [
                 'source' => 100,
+                'default' => null,
                 'expectedValue' => 100,
             ],
             'integer string' => [
                 'source' => (string) 99,
+                'default' => null,
                 'expectedValue' => 99,
             ],
-            'non-integer string' => [
+            'non-integer string, no default' => [
                 'source' => 'string',
+                'default' => null,
                 'expectedValue' => 0,
             ],
-            'empty array' => [
+            'empty array, no default' => [
                 'source' => [],
+                'default' => null,
                 'expectedValue' => 0,
             ],
-            'non-empty array' => [
+            'non-empty array, no default' => [
                 'source' => [1],
+                'default' => null,
                 'expectedValue' => 1,
+            ],
+            'non-integer string, has default' => [
+                'source' => 'string',
+                'default' => 50,
+                'expectedValue' => 50,
+            ],
+            'empty array, has default' => [
+                'source' => [],
+                'default' => 51,
+                'expectedValue' => 51,
+            ],
+            'non-empty array, has default' => [
+                'source' => [1],
+                'default' => 52,
+                'expectedValue' => 52,
             ],
         ];
     }
