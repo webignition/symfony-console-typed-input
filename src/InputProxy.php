@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\SymfonyConsole\TypedInput;
 
 use Symfony\Component\Console\Exception\InvalidArgumentException;
