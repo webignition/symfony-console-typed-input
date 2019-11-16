@@ -17,7 +17,7 @@ class TypedInput extends InputProxy implements InputInterface
         }
     }
 
-    public function getIntegerArgument(string $name, int $default = null): int
+    public function getIntegerArgument(string $name, ?int $default = null): int
     {
         return $this->getIntegerValue(
             $this->getArgument($name),
@@ -30,7 +30,7 @@ class TypedInput extends InputProxy implements InputInterface
         return $this->getBooleanValue($this->getArgument($name));
     }
 
-    public function getIntegerOption(string $name, int $default = null): int
+    public function getIntegerOption(string $name, ?int $default = null): int
     {
         return $this->getIntegerValue(
             $this->getOption($name),
@@ -41,6 +41,22 @@ class TypedInput extends InputProxy implements InputInterface
     public function getBooleanOption(string $name): ?bool
     {
         return $this->getBooleanValue($this->getOption($name));
+    }
+
+    public function getStringArgument(string $name, ?string $default = null): ?string
+    {
+        return $this->getStringValue(
+            $this->getArgument($name),
+            $default
+        );
+    }
+
+    public function getStringOption(string $name, ?string $default = null): ?string
+    {
+        return $this->getStringValue(
+            $this->getOption($name),
+            $default
+        );
     }
 
     private function getIntegerValue($value, int $default = null): int
@@ -63,5 +79,12 @@ class TypedInput extends InputProxy implements InputInterface
         }
 
         return (bool) $value;
+    }
+
+    private function getStringValue($value, ?string $default = null): ?string
+    {
+        return is_int($value) || is_string($value)
+            ? (string) $value
+            : $default;
     }
 }
