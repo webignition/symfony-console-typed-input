@@ -24,9 +24,9 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerArgument($source, ?int $default, int $expectedValue)
+    public function testGetIntegerArgument($source, $default, $expectedValue)
     {
-        $this->assertGetIntegerValue(
+        $this->assertGetValue(
             'getArgument',
             $source,
             $default,
@@ -40,40 +40,17 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerOption($source, ?int $default, $expectedValue)
+    public function testGetIntegerOption($source, $default, $expectedValue)
     {
-        $this->assertGetIntegerValue(
+        $this->assertGetValue(
             'getOption',
             $source,
             $default,
             $expectedValue,
-            function (TypedInput $typedInput, ?int $default) {
+            function (TypedInput $typedInput, $default) {
                 return $typedInput->getIntegerOption('name', $default);
             }
         );
-    }
-
-    private function assertGetIntegerValue(
-        string $mockedMethodName,
-        $source,
-        ?int $default,
-        int $expectedValue,
-        callable $valueGetter
-    ) {
-        $name = 'name';
-
-        $input = \Mockery::mock(InputInterface::class);
-        $input
-            ->shouldReceive($mockedMethodName)
-            ->with($name)
-            ->andReturn($source);
-
-        $typedInput = new TypedInput($input);
-
-        $value = $valueGetter($typedInput, $default);
-
-        $this->assertIsInt($value);
-        $this->assertEquals($expectedValue, $value);
     }
 
     public function getIntegerValueDataProvider(): array
@@ -125,11 +102,12 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getBooleanValueDataProvider
      */
-    public function testGetBooleanArgument($source, bool $expectedValue)
+    public function testGetBooleanArgument($source, $expectedValue)
     {
-        $this->assertGetBooleanValue(
+        $this->assertGetValue(
             'getArgument',
             $source,
+            null,
             $expectedValue,
             function (TypedInput $typedInput) {
                 return $typedInput->getBooleanArgument('name');
@@ -142,36 +120,15 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetBooleanOption($source, bool $expectedValue)
     {
-        $this->assertGetBooleanValue(
+        $this->assertGetValue(
             'getOption',
             $source,
+            null,
             $expectedValue,
             function (TypedInput $typedInput) {
                 return $typedInput->getBooleanOption('name');
             }
         );
-    }
-
-    private function assertGetBooleanValue(
-        string $mockedMethodName,
-        $source,
-        bool $expectedValue,
-        callable $valueGetter
-    ) {
-        $name = 'name';
-
-        $input = \Mockery::mock(InputInterface::class);
-        $input
-            ->shouldReceive($mockedMethodName)
-            ->with($name)
-            ->andReturn($source);
-
-        $typedInput = new TypedInput($input);
-
-        $value = $valueGetter($typedInput);
-
-        $this->assertIsBool($value);
-        $this->assertEquals($expectedValue, $value);
     }
 
     public function getBooleanValueDataProvider(): array
@@ -198,5 +155,105 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
                 'expectedValue' => true,
             ],
         ];
+    }
+
+    /**
+     * @dataProvider getStringValueDataProvider
+     */
+    public function testGetStringArgument($source, ?string $default, ?string $expectedValue)
+    {
+        $this->assertGetValue(
+            'getArgument',
+            $source,
+            $default,
+            $expectedValue,
+            function (TypedInput $typedInput, $default) {
+                return $typedInput->getStringArgument('name', $default);
+            }
+        );
+    }
+
+    /**
+     * @dataProvider getStringValueDataProvider
+     */
+    public function testGetStringOption($source, ?string $default, ?string $expectedValue)
+    {
+        $this->assertGetValue(
+            'getOption',
+            $source,
+            $default,
+            $expectedValue,
+            function (TypedInput $typedInput, $default) {
+                return $typedInput->getStringOption('name', $default);
+            }
+        );
+    }
+
+    public function getStringValueDataProvider(): array
+    {
+        return [
+            'int' => [
+                'source' => 100,
+                'default' => null,
+                'expectedValue' => '100',
+            ],
+            'integer string' => [
+                'source' => '99',
+                'default' => null,
+                'expectedValue' => '99',
+            ],
+            'string, no default' => [
+                'source' => 'string',
+                'default' => null,
+                'expectedValue' => 'string',
+            ],
+            'empty array, no default' => [
+                'source' => [],
+                'default' => null,
+                'expectedValue' => null,
+            ],
+            'non-empty array, no default' => [
+                'source' => [1],
+                'default' => null,
+                'expectedValue' => null,
+            ],
+            'string, has default' => [
+                'source' => 'string',
+                'default' => 'default',
+                'expectedValue' => 'string',
+            ],
+            'empty array, has default' => [
+                'source' => [],
+                'default' => 'default',
+                'expectedValue' => 'default',
+            ],
+            'non-empty array, has default' => [
+                'source' => [1],
+                'default' => 'default',
+                'expectedValue' => 'default',
+            ],
+        ];
+    }
+
+    private function assertGetValue(
+        string $mockedMethodName,
+        $source,
+        $default,
+        $expectedValue,
+        callable $valueGetter
+    ) {
+        $name = 'name';
+
+        $input = \Mockery::mock(InputInterface::class);
+        $input
+            ->shouldReceive($mockedMethodName)
+            ->with($name)
+            ->andReturn($source);
+
+        $typedInput = new TypedInput($input);
+
+        $value = $valueGetter($typedInput, $default);
+
+        $this->assertSame($expectedValue, $value);
     }
 }
