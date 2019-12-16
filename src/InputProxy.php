@@ -27,7 +27,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|array $values The values to look for in the raw parameters (can be an array)
+     * @param string|array<mixed> $values The values to look for in the raw parameters (can be an array)
      * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
      * @return bool true if the value is contained in the raw parameters
@@ -38,7 +38,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|array $values The value(s) to look for in the raw parameters (can be an array)
+     * @param string|array<mixed> $values The value(s) to look for in the raw parameters (can be an array)
      * @param mixed $default The default value to return if no result is found
      * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
@@ -66,6 +66,9 @@ class InputProxy implements InputInterface
         $this->input->validate();
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getArguments(): array
     {
         return $this->input->getArguments();
@@ -105,7 +108,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
