@@ -29,7 +29,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->typedInput = new TypedInput($this->sourceInput);
     }
 
-    public function testGetFirstArgument()
+    public function testGetFirstArgument(): void
     {
         $firstArgument = 'first argument';
 
@@ -41,7 +41,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($firstArgument, $this->typedInput->getFirstArgument());
     }
 
-    public function testHasParameterOption()
+    public function testHasParameterOption(): void
     {
         $values = 'values';
         $onlyParams = false;
@@ -55,7 +55,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($hasParameterOption, $this->typedInput->hasParameterOption($values, $onlyParams));
     }
 
-    public function testGetParameterOption()
+    public function testGetParameterOption(): void
     {
         $values = 'values';
         $default = false;
@@ -70,7 +70,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($option, $this->typedInput->getParameterOption($values, $default, $onlyParams));
     }
 
-    public function testBind()
+    public function testBind(): void
     {
         $inputDefinition = \Mockery::mock(InputDefinition::class);
 
@@ -82,7 +82,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
     }
 
-    public function testValidate()
+    public function testValidate(): void
     {
         $this->sourceInput
             ->shouldReceive('validate');
@@ -91,7 +91,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
     }
 
-    public function testGetArguments()
+    public function testGetArguments(): void
     {
         $arguments = [];
 
@@ -102,7 +102,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($arguments, $this->typedInput->getArguments());
     }
 
-    public function testGetArgument()
+    public function testGetArgument(): void
     {
         $name = 'argument';
         $value = 'value';
@@ -115,7 +115,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $this->typedInput->getArgument($name));
     }
 
-    public function testSetArgument()
+    public function testSetArgument(): void
     {
         $name = 'name';
         $value = 'value';
@@ -128,7 +128,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
     }
 
-    public function testHasArgument()
+    public function testHasArgument(): void
     {
         $name = 'argument';
         $hasArgument = true;
@@ -141,7 +141,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($hasArgument, $this->typedInput->hasArgument($name));
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
         $options = [];
 
@@ -152,7 +152,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($options, $this->typedInput->getOptions());
     }
 
-    public function testGetOption()
+    public function testGetOption(): void
     {
         $name = 'argument';
         $value = 'value';
@@ -165,7 +165,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $this->typedInput->getOption($name));
     }
 
-    public function testSetOption()
+    public function testSetOption(): void
     {
         $name = 'name';
         $value = 'value';
@@ -178,7 +178,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
     }
 
-    public function testHasOption()
+    public function testHasOption(): void
     {
         $name = 'option';
         $hasOption = true;
@@ -191,7 +191,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($hasOption, $this->typedInput->hasOption($name));
     }
 
-    public function testIsInteractive()
+    public function testIsInteractive(): void
     {
         $isInteractive = true;
 
@@ -202,7 +202,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($isInteractive, $this->typedInput->isInteractive());
     }
 
-    public function testSetInteractive()
+    public function testSetInteractive(): void
     {
         $interactive = true;
 

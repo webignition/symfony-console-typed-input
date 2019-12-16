@@ -11,6 +11,9 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class InputProxy implements InputInterface
 {
+    /**
+     * @var InputInterface
+     */
     private $input;
 
     public function __construct(InputInterface $input)
@@ -24,7 +27,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|array $values The values to look for in the raw parameters (can be an array)
+     * @param string|array<mixed> $values The values to look for in the raw parameters (can be an array)
      * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
      * @return bool true if the value is contained in the raw parameters
@@ -35,7 +38,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|array $values The value(s) to look for in the raw parameters (can be an array)
+     * @param string|array<mixed> $values The value(s) to look for in the raw parameters (can be an array)
      * @param mixed $default The default value to return if no result is found
      * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
@@ -50,7 +53,7 @@ class InputProxy implements InputInterface
      * @param InputDefinition $definition
      * @throws RuntimeException
      */
-    public function bind(InputDefinition $definition)
+    public function bind(InputDefinition $definition): void
     {
         $this->input->bind($definition);
     }
@@ -58,11 +61,14 @@ class InputProxy implements InputInterface
     /**
      * @throws RuntimeException When not enough arguments are given
      */
-    public function validate()
+    public function validate(): void
     {
         $this->input->validate();
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getArguments(): array
     {
         return $this->input->getArguments();
@@ -86,7 +92,7 @@ class InputProxy implements InputInterface
      *
      * @throws InvalidArgumentException When argument given doesn't exist
      */
-    public function setArgument($name, $value)
+    public function setArgument($name, $value): void
     {
         $this->input->setArgument($name, $value);
     }
@@ -102,7 +108,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -127,9 +133,9 @@ class InputProxy implements InputInterface
      *
      * @throws InvalidArgumentException When option given doesn't exist
      */
-    public function setOption($name, $value)
+    public function setOption($name, $value): void
     {
-        return $this->input->setOption($name, $value);
+        $this->input->setOption($name, $value);
     }
 
     /**
@@ -153,7 +159,7 @@ class InputProxy implements InputInterface
     /**
      * @param bool $interactive If the input should be interactive
      */
-    public function setInteractive($interactive)
+    public function setInteractive($interactive): void
     {
         $this->input->setInteractive($interactive);
     }

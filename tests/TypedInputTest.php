@@ -10,7 +10,7 @@ use webignition\SymfonyConsole\TypedInput\TypedInput;
 
 class TypedInputTest extends \PHPUnit\Framework\TestCase
 {
-    public function testWrapTypedInput()
+    public function testWrapTypedInput(): void
     {
         $arrayInput = new ArrayInput([]);
         $typedInput = new TypedInput($arrayInput);
@@ -22,9 +22,13 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param mixed $source
+     * @param int|null $default
+     * @param int $expectedValue
+     *
      * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerArgument($source, $default, $expectedValue)
+    public function testGetIntegerArgument($source, ?int $default, int $expectedValue): void
     {
         $this->assertGetValue(
             'getArgument',
@@ -38,9 +42,13 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param mixed $source
+     * @param int|null $default
+     * @param int $expectedValue
+     *
      * @dataProvider getIntegerValueDataProvider
      */
-    public function testGetIntegerOption($source, $default, $expectedValue)
+    public function testGetIntegerOption($source, ?int $default, int $expectedValue): void
     {
         $this->assertGetValue(
             'getOption',
@@ -100,9 +108,12 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param mixed $source
+     * @param bool $expectedValue
+     *
      * @dataProvider getBooleanValueDataProvider
      */
-    public function testGetBooleanArgument($source, $expectedValue)
+    public function testGetBooleanArgument($source, bool $expectedValue): void
     {
         $this->assertGetValue(
             'getArgument',
@@ -116,9 +127,12 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param mixed $source
+     * @param bool $expectedValue
+     *
      * @dataProvider getBooleanValueDataProvider
      */
-    public function testGetBooleanOption($source, bool $expectedValue)
+    public function testGetBooleanOption($source, bool $expectedValue): void
     {
         $this->assertGetValue(
             'getOption',
@@ -158,9 +172,13 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param mixed $source
+     * @param string|null $default
+     * @param string|null $expectedValue
+     *
      * @dataProvider getStringValueDataProvider
      */
-    public function testGetStringArgument($source, ?string $default, ?string $expectedValue)
+    public function testGetStringArgument($source, ?string $default, ?string $expectedValue): void
     {
         $this->assertGetValue(
             'getArgument',
@@ -174,9 +192,13 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param mixed $source
+     * @param string|null $default
+     * @param string|null $expectedValue
+     *
      * @dataProvider getStringValueDataProvider
      */
-    public function testGetStringOption($source, ?string $default, ?string $expectedValue)
+    public function testGetStringOption($source, ?string $default, ?string $expectedValue): void
     {
         $this->assertGetValue(
             'getOption',
@@ -235,13 +257,20 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @param string $mockedMethodName
+     * @param mixed $source
+     * @param mixed $default
+     * @param mixed $expectedValue
+     * @param callable $valueGetter
+     */
     private function assertGetValue(
         string $mockedMethodName,
         $source,
         $default,
         $expectedValue,
         callable $valueGetter
-    ) {
+    ): void {
         $name = 'name';
 
         $input = \Mockery::mock(InputInterface::class);
