@@ -11,6 +11,9 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class InputProxy implements InputInterface
 {
+    /**
+     * @var InputInterface
+     */
     private $input;
 
     public function __construct(InputInterface $input)
@@ -50,7 +53,7 @@ class InputProxy implements InputInterface
      * @param InputDefinition $definition
      * @throws RuntimeException
      */
-    public function bind(InputDefinition $definition)
+    public function bind(InputDefinition $definition): void
     {
         $this->input->bind($definition);
     }
@@ -58,7 +61,7 @@ class InputProxy implements InputInterface
     /**
      * @throws RuntimeException When not enough arguments are given
      */
-    public function validate()
+    public function validate(): void
     {
         $this->input->validate();
     }
@@ -86,7 +89,7 @@ class InputProxy implements InputInterface
      *
      * @throws InvalidArgumentException When argument given doesn't exist
      */
-    public function setArgument($name, $value)
+    public function setArgument($name, $value): void
     {
         $this->input->setArgument($name, $value);
     }
@@ -127,9 +130,9 @@ class InputProxy implements InputInterface
      *
      * @throws InvalidArgumentException When option given doesn't exist
      */
-    public function setOption($name, $value)
+    public function setOption($name, $value): void
     {
-        return $this->input->setOption($name, $value);
+        $this->input->setOption($name, $value);
     }
 
     /**
@@ -153,7 +156,7 @@ class InputProxy implements InputInterface
     /**
      * @param bool $interactive If the input should be interactive
      */
-    public function setInteractive($interactive)
+    public function setInteractive($interactive): void
     {
         $this->input->setInteractive($interactive);
     }
