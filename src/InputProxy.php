@@ -11,10 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class InputProxy implements InputInterface
 {
-    /**
-     * @var InputInterface
-     */
-    private $input;
+    private InputInterface $input;
 
     public function __construct(InputInterface $input)
     {

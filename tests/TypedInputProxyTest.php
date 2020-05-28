@@ -15,11 +15,7 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
      * @var InputInterface|MockInterface
      */
     private $sourceInput;
-
-    /**
-     * @var TypedInput
-     */
-    private $typedInput;
+    private TypedInput $typedInput;
 
     protected function setUp(): void
     {
