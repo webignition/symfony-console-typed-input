@@ -1,6 +1,7 @@
-includes:
-  - vendor/phpstan/phpstan-mockery/extension.neon
-
 parameters:
+  level: 8
+  paths:
+    - src
+    - tests
   ignoreErrors:
     - '#DataProvider\(\) return type has no value type specified in iterable type array#'
