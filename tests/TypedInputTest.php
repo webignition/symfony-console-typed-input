@@ -61,6 +61,9 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @return array[]
+     */
     public function getIntegerValueDataProvider(): array
     {
         return [
@@ -145,6 +148,9 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @return array[]
+     */
     public function getBooleanValueDataProvider(): array
     {
         return [
@@ -211,6 +217,9 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @return array[]
+     */
     public function getStringValueDataProvider(): array
     {
         return [
