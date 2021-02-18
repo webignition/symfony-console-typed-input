@@ -40,7 +40,7 @@
         ]
     },
     "require": {
-        "php": ">=7.4",
+        "php": ">=7.4|^8",
         "symfony/console": "^4.4|^5.0"
     },
     "require-dev": {
