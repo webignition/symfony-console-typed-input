@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyConsole\TypedInput;
 
-use Symfony\Component\Console\Exception\InvalidArgumentException;
-use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -24,39 +22,27 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param array<mixed>|string $values     The values to look for in the raw parameters (can be an array)
-     * @param bool                $onlyParams Only check real parameters, skip those following an end of options (--) signal
-     *
-     * @return bool true if the value is contained in the raw parameters
+     * @param array<mixed>|string $values
      */
-    public function hasParameterOption($values, $onlyParams = false): bool
+    public function hasParameterOption($values, bool $onlyParams = false): bool
     {
         return $this->input->hasParameterOption($values, $onlyParams);
     }
 
     /**
-     * @param array<mixed>|string $values     The value(s) to look for in the raw parameters (can be an array)
-     * @param mixed               $default    The default value to return if no result is found
-     * @param bool                $onlyParams Only check real parameters, skip those following an end of options (--) signal
-     *
-     * @return mixed The option value
+     * @param array<mixed>|string $values
+     * @param mixed               $default
      */
-    public function getParameterOption($values, $default = false, $onlyParams = false)
+    public function getParameterOption($values, $default = false, bool $onlyParams = false)
     {
         return $this->input->getParameterOption($values, $default, $onlyParams);
     }
 
-    /**
-     * @throws RuntimeException
-     */
     public function bind(InputDefinition $definition): void
     {
         $this->input->bind($definition);
     }
 
-    /**
-     * @throws RuntimeException When not enough arguments are given
-     */
     public function validate(): void
     {
         $this->input->validate();
@@ -70,34 +56,19 @@ class InputProxy implements InputInterface
         return $this->input->getArguments();
     }
 
-    /**
-     * @param string $name The argument name
-     *
-     * @return null|string|string[] The argument value
-     *
-     * @throws InvalidArgumentException When argument given doesn't exist
-     */
-    public function getArgument($name)
+    public function getArgument(string $name)
     {
         return $this->input->getArgument($name);
     }
 
     /**
-     * @param string               $name  The argument name
-     * @param null|string|string[] $value The argument value
-     *
-     * @throws InvalidArgumentException When argument given doesn't exist
+     * @param null|string|string[] $value
      */
-    public function setArgument($name, $value): void
+    public function setArgument(string $name, $value): void
     {
         $this->input->setArgument($name, $value);
     }
 
-    /**
-     * @param int|string $name The InputArgument name or position
-     *
-     * @return bool true if the InputArgument object exists, false otherwise
-     */
     public function hasArgument($name): bool
     {
         return $this->input->hasArgument($name);
@@ -111,35 +82,20 @@ class InputProxy implements InputInterface
         return $this->input->getOptions();
     }
 
-    /**
-     * @param string $name The option name
-     *
-     * @return null|bool|string|string[] The option value
-     *
-     * @throws InvalidArgumentException When option given doesn't exist
-     */
-    public function getOption($name)
+    public function getOption(string $name)
     {
         return $this->input->getOption($name);
     }
 
     /**
-     * @param string                    $name  The option name
-     * @param null|bool|string|string[] $value The option value
-     *
-     * @throws InvalidArgumentException When option given doesn't exist
+     * @param null|bool|string|string[] $value
      */
-    public function setOption($name, $value): void
+    public function setOption(string $name, $value): void
     {
         $this->input->setOption($name, $value);
     }
 
-    /**
-     * @param string $name The InputOption name
-     *
-     * @return bool true if the InputOption object exists, false otherwise
-     */
-    public function hasOption($name): bool
+    public function hasOption(string $name): bool
     {
         return $this->input->hasOption($name);
     }
@@ -149,10 +105,7 @@ class InputProxy implements InputInterface
         return $this->input->isInteractive();
     }
 
-    /**
-     * @param bool $interactive If the input should be interactive
-     */
-    public function setInteractive($interactive): void
+    public function setInteractive(bool $interactive): void
     {
         $this->input->setInteractive($interactive);
     }
