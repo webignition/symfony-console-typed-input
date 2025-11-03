@@ -12,10 +12,7 @@ use webignition\SymfonyConsole\TypedInput\TypedInput;
 
 class TypedInputProxyTest extends TestCase
 {
-    /**
-     * @var InputInterface
-     */
-    private $sourceInput;
+    private InputInterface&MockInterface $sourceInput;
     private TypedInput $typedInput;
 
     protected function setUp(): void
@@ -95,7 +92,8 @@ class TypedInputProxyTest extends TestCase
         });
 
         $this->typedInput->bind($inputDefinition);
-        $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testValidate(): void
@@ -107,7 +105,8 @@ class TypedInputProxyTest extends TestCase
         });
 
         $this->typedInput->validate();
-        $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testGetArguments(): void
@@ -153,7 +152,8 @@ class TypedInputProxyTest extends TestCase
         });
 
         $this->typedInput->setArgument($name, $value);
-        $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testHasArgument(): void
@@ -215,7 +215,8 @@ class TypedInputProxyTest extends TestCase
         });
 
         $this->typedInput->setOption($name, $value);
-        $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testHasOption(): void
@@ -260,13 +261,12 @@ class TypedInputProxyTest extends TestCase
         });
 
         $this->typedInput->setInteractive($interactive);
-        $this->addToAssertionCount(\Mockery::getContainer()->mockery_getExpectationCount());
+
+        $this->expectNotToPerformAssertions();
     }
 
     private function applyMockCalls(callable $callable): void
     {
-        if ($this->sourceInput instanceof MockInterface) {
-            $callable($this->sourceInput);
-        }
+        $callable($this->sourceInput);
     }
 }
