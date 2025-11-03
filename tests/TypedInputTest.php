@@ -62,7 +62,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getIntegerValueDataProvider(): array
     {
@@ -149,7 +149,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getBooleanValueDataProvider(): array
     {
@@ -218,7 +218,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getStringValueDataProvider(): array
     {
