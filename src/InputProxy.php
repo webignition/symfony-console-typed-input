@@ -35,7 +35,7 @@ class InputProxy implements InputInterface
      */
     public function getParameterOption(
         array|string $values,
-        null|array|bool|float|int|string $default = false,
+        array|bool|float|int|string|null $default = false,
         bool $onlyParams = false
     ) {
         return $this->input->getParameterOption($values, $default, $onlyParams);
