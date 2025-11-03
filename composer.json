@@ -39,7 +39,7 @@
     },
     "require": {
         "php": "^8.3",
-        "symfony/console": "^6"
+        "symfony/console": "^7.3"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
