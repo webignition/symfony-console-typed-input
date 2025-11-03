@@ -24,17 +24,20 @@ class InputProxy implements InputInterface
     /**
      * @param array<mixed>|string $values
      */
-    public function hasParameterOption($values, bool $onlyParams = false): bool
+    public function hasParameterOption(array|string $values, bool $onlyParams = false): bool
     {
         return $this->input->hasParameterOption($values, $onlyParams);
     }
 
     /**
-     * @param array<mixed>|string $values
-     * @param mixed               $default
+     * @param array<mixed>|string                     $values
+     * @param null|array<mixed>|bool|float|int|string $default
      */
-    public function getParameterOption($values, $default = false, bool $onlyParams = false)
-    {
+    public function getParameterOption(
+        array|string $values,
+        null|array|bool|float|int|string $default = false,
+        bool $onlyParams = false
+    ) {
         return $this->input->getParameterOption($values, $default, $onlyParams);
     }
 
@@ -69,10 +72,7 @@ class InputProxy implements InputInterface
         $this->input->setArgument($name, $value);
     }
 
-    /**
-     * @param int|string $name
-     */
-    public function hasArgument($name): bool
+    public function hasArgument(string $name): bool
     {
         return $this->input->hasArgument($name);
     }
@@ -90,10 +90,7 @@ class InputProxy implements InputInterface
         return $this->input->getOption($name);
     }
 
-    /**
-     * @param null|bool|string|string[] $value
-     */
-    public function setOption(string $name, $value): void
+    public function setOption(string $name, mixed $value): void
     {
         $this->input->setOption($name, $value);
     }
