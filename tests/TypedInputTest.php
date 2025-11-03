@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyConsole\TypedInput\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,12 +23,8 @@ class TypedInputTest extends TestCase
         new TypedInput($typedInput);
     }
 
-    /**
-     * @param mixed $source
-     *
-     * @dataProvider getIntegerValueDataProvider
-     */
-    public function testGetIntegerArgument($source, ?int $default, int $expectedValue): void
+    #[DataProvider('getIntegerValueDataProvider')]
+    public function testGetIntegerArgument(mixed $source, ?int $default, int $expectedValue): void
     {
         $this->assertGetValue(
             'getArgument',
@@ -40,12 +37,8 @@ class TypedInputTest extends TestCase
         );
     }
 
-    /**
-     * @param mixed $source
-     *
-     * @dataProvider getIntegerValueDataProvider
-     */
-    public function testGetIntegerOption($source, ?int $default, int $expectedValue): void
+    #[DataProvider('getIntegerValueDataProvider')]
+    public function testGetIntegerOption(mixed $source, ?int $default, int $expectedValue): void
     {
         $this->assertGetValue(
             'getOption',
@@ -107,12 +100,8 @@ class TypedInputTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $source
-     *
-     * @dataProvider getBooleanValueDataProvider
-     */
-    public function testGetBooleanArgument($source, bool $expectedValue): void
+    #[DataProvider('getBooleanValueDataProvider')]
+    public function testGetBooleanArgument(mixed $source, bool $expectedValue): void
     {
         $this->assertGetValue(
             'getArgument',
@@ -125,12 +114,8 @@ class TypedInputTest extends TestCase
         );
     }
 
-    /**
-     * @param mixed $source
-     *
-     * @dataProvider getBooleanValueDataProvider
-     */
-    public function testGetBooleanOption($source, bool $expectedValue): void
+    #[DataProvider('getBooleanValueDataProvider')]
+    public function testGetBooleanOption(mixed $source, bool $expectedValue): void
     {
         $this->assertGetValue(
             'getOption',
@@ -172,12 +157,8 @@ class TypedInputTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $source
-     *
-     * @dataProvider getStringValueDataProvider
-     */
-    public function testGetStringArgument($source, ?string $default, ?string $expectedValue): void
+    #[DataProvider('getStringValueDataProvider')]
+    public function testGetStringArgument(mixed $source, ?string $default, ?string $expectedValue): void
     {
         $this->assertGetValue(
             'getArgument',
@@ -190,12 +171,8 @@ class TypedInputTest extends TestCase
         );
     }
 
-    /**
-     * @param mixed $source
-     *
-     * @dataProvider getStringValueDataProvider
-     */
-    public function testGetStringOption($source, ?string $default, ?string $expectedValue): void
+    #[DataProvider('getStringValueDataProvider')]
+    public function testGetStringOption(mixed $source, ?string $default, ?string $expectedValue): void
     {
         $this->assertGetValue(
             'getOption',
@@ -257,16 +234,11 @@ class TypedInputTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $source
-     * @param mixed $default
-     * @param mixed $expectedValue
-     */
     private function assertGetValue(
         string $mockedMethodName,
-        $source,
-        $default,
-        $expectedValue,
+        mixed $source,
+        mixed $default,
+        mixed $expectedValue,
         callable $valueGetter
     ): void {
         $name = 'name';
