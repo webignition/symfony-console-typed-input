@@ -16,6 +16,11 @@ class InputProxy implements InputInterface
         $this->input = $input;
     }
 
+    public function __toString(): string
+    {
+        return $this->input->__toString();
+    }
+
     public function getFirstArgument(): ?string
     {
         return $this->input->getFirstArgument();
@@ -37,7 +42,7 @@ class InputProxy implements InputInterface
         array|string $values,
         array|bool|float|int|string|null $default = false,
         bool $onlyParams = false
-    ) {
+    ): mixed {
         return $this->input->getParameterOption($values, $default, $onlyParams);
     }
 
@@ -59,7 +64,7 @@ class InputProxy implements InputInterface
         return $this->input->getArguments();
     }
 
-    public function getArgument(string $name)
+    public function getArgument(string $name): mixed
     {
         return $this->input->getArgument($name);
     }
@@ -85,7 +90,7 @@ class InputProxy implements InputInterface
         return $this->input->getOptions();
     }
 
-    public function getOption(string $name)
+    public function getOption(string $name): mixed
     {
         return $this->input->getOption($name);
     }
