@@ -70,7 +70,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|int $name
+     * @param int|string $name
      */
     public function hasArgument($name): bool
     {
