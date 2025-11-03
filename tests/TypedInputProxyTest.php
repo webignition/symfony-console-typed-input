@@ -34,13 +34,11 @@ class TypedInputProxyTest extends TestCase
     {
         $firstArgument = 'first argument';
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($firstArgument) {
-            $mock
-                ->shouldReceive('getFirstArgument')
-                ->withNoArgs()
-                ->andReturn($firstArgument)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('getFirstArgument')
+            ->withNoArgs()
+            ->andReturn($firstArgument)
+        ;
 
         $this->assertEquals($firstArgument, $this->typedInput->getFirstArgument());
     }
@@ -51,13 +49,11 @@ class TypedInputProxyTest extends TestCase
         $onlyParams = false;
         $hasParameterOption = true;
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($values, $onlyParams, $hasParameterOption) {
-            $mock
-                ->shouldReceive('hasParameterOption')
-                ->with($values, $onlyParams)
-                ->andReturn($hasParameterOption)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('hasParameterOption')
+            ->with($values, $onlyParams)
+            ->andReturn($hasParameterOption)
+        ;
 
         $this->assertEquals($hasParameterOption, $this->typedInput->hasParameterOption($values, $onlyParams));
     }
@@ -69,13 +65,11 @@ class TypedInputProxyTest extends TestCase
         $onlyParams = false;
         $option = 'option';
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($values, $default, $onlyParams, $option) {
-            $mock
-                ->shouldReceive('getParameterOption')
-                ->with($values, $default, $onlyParams)
-                ->andReturn($option)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('getParameterOption')
+            ->with($values, $default, $onlyParams)
+            ->andReturn($option)
+        ;
 
         $this->assertEquals($option, $this->typedInput->getParameterOption($values, $default, $onlyParams));
     }
@@ -84,12 +78,10 @@ class TypedInputProxyTest extends TestCase
     {
         $inputDefinition = \Mockery::mock(InputDefinition::class);
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($inputDefinition) {
-            $mock
-                ->shouldReceive('bind')
-                ->with($inputDefinition)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('bind')
+            ->with($inputDefinition)
+        ;
 
         $this->typedInput->bind($inputDefinition);
 
@@ -98,11 +90,7 @@ class TypedInputProxyTest extends TestCase
 
     public function testValidate(): void
     {
-        $this->applyMockCalls(function (MockInterface $mock) {
-            $mock
-                ->shouldReceive('validate')
-            ;
-        });
+        $this->sourceInput->shouldReceive('validate');
 
         $this->typedInput->validate();
 
@@ -113,12 +101,10 @@ class TypedInputProxyTest extends TestCase
     {
         $arguments = [];
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($arguments) {
-            $mock
-                ->shouldReceive('getArguments')
-                ->andReturn($arguments)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('getArguments')
+            ->andReturn($arguments)
+        ;
 
         $this->assertEquals($arguments, $this->typedInput->getArguments());
     }
@@ -128,13 +114,11 @@ class TypedInputProxyTest extends TestCase
         $name = 'argument';
         $value = 'value';
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($name, $value) {
-            $mock
-                ->shouldReceive('getArgument')
-                ->with($name)
-                ->andReturn($value)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('getArgument')
+            ->with($name)
+            ->andReturn($value)
+        ;
 
         $this->assertEquals($value, $this->typedInput->getArgument($name));
     }
@@ -144,12 +128,10 @@ class TypedInputProxyTest extends TestCase
         $name = 'name';
         $value = 'value';
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($name, $value) {
-            $mock
-                ->shouldReceive('setArgument')
-                ->with($name, $value)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('setArgument')
+            ->with($name, $value)
+        ;
 
         $this->typedInput->setArgument($name, $value);
 
@@ -161,13 +143,11 @@ class TypedInputProxyTest extends TestCase
         $name = 'argument';
         $hasArgument = true;
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($name, $hasArgument) {
-            $mock
-                ->shouldReceive('hasArgument')
-                ->with($name)
-                ->andReturn($hasArgument)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('hasArgument')
+            ->with($name)
+            ->andReturn($hasArgument)
+        ;
 
         $this->assertEquals($hasArgument, $this->typedInput->hasArgument($name));
     }
@@ -176,12 +156,10 @@ class TypedInputProxyTest extends TestCase
     {
         $options = [];
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($options) {
-            $mock
-                ->shouldReceive('getOptions')
-                ->andReturn($options)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('getOptions')
+            ->andReturn($options)
+        ;
 
         $this->assertEquals($options, $this->typedInput->getOptions());
     }
@@ -191,13 +169,11 @@ class TypedInputProxyTest extends TestCase
         $name = 'argument';
         $value = 'value';
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($name, $value) {
-            $mock
-                ->shouldReceive('getOption')
-                ->with($name)
-                ->andReturn($value)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('getOption')
+            ->with($name)
+            ->andReturn($value)
+        ;
 
         $this->assertEquals($value, $this->typedInput->getOption($name));
     }
@@ -207,12 +183,10 @@ class TypedInputProxyTest extends TestCase
         $name = 'name';
         $value = 'value';
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($name, $value) {
-            $mock
-                ->shouldReceive('setOption')
-                ->with($name, $value)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('setOption')
+            ->with($name, $value)
+        ;
 
         $this->typedInput->setOption($name, $value);
 
@@ -224,13 +198,11 @@ class TypedInputProxyTest extends TestCase
         $name = 'option';
         $hasOption = true;
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($name, $hasOption) {
-            $mock
-                ->shouldReceive('hasOption')
-                ->with($name)
-                ->andReturn($hasOption)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('hasOption')
+            ->with($name)
+            ->andReturn($hasOption)
+        ;
 
         $this->assertEquals($hasOption, $this->typedInput->hasOption($name));
     }
@@ -239,12 +211,10 @@ class TypedInputProxyTest extends TestCase
     {
         $isInteractive = true;
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($isInteractive) {
-            $mock
-                ->shouldReceive('isInteractive')
-                ->andReturn($isInteractive)
-            ;
-        });
+        $this->sourceInput
+            ->shouldReceive('isInteractive')
+            ->andReturn($isInteractive)
+        ;
 
         $this->assertEquals($isInteractive, $this->typedInput->isInteractive());
     }
@@ -253,20 +223,12 @@ class TypedInputProxyTest extends TestCase
     {
         $interactive = true;
 
-        $this->applyMockCalls(function (MockInterface $mock) use ($interactive) {
-            $mock
-                ->shouldReceive('setInteractive')
-                ->with($interactive)
-            ;
-        });
-
+        $this->sourceInput
+            ->shouldReceive('setInteractive')
+            ->with($interactive)
+        ;
         $this->typedInput->setInteractive($interactive);
 
         $this->expectNotToPerformAssertions();
-    }
-
-    private function applyMockCalls(callable $callable): void
-    {
-        $callable($this->sourceInput);
     }
 }
