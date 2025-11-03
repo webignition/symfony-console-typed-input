@@ -69,6 +69,9 @@ class InputProxy implements InputInterface
         $this->input->setArgument($name, $value);
     }
 
+    /**
+     * @param string|int $name
+     */
     public function hasArgument($name): bool
     {
         return $this->input->hasArgument($name);
