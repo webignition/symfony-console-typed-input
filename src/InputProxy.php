@@ -24,8 +24,8 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|array<mixed> $values The values to look for in the raw parameters (can be an array)
-     * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
+     * @param array<mixed>|string $values     The values to look for in the raw parameters (can be an array)
+     * @param bool                $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
      * @return bool true if the value is contained in the raw parameters
      */
@@ -35,9 +35,9 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|array<mixed> $values The value(s) to look for in the raw parameters (can be an array)
-     * @param mixed $default The default value to return if no result is found
-     * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
+     * @param array<mixed>|string $values     The value(s) to look for in the raw parameters (can be an array)
+     * @param mixed               $default    The default value to return if no result is found
+     * @param bool                $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
      * @return mixed The option value
      */
@@ -47,7 +47,6 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param InputDefinition $definition
      * @throws RuntimeException
      */
     public function bind(InputDefinition $definition): void
@@ -74,7 +73,7 @@ class InputProxy implements InputInterface
     /**
      * @param string $name The argument name
      *
-     * @return string|string[]|null The argument value
+     * @return null|string|string[] The argument value
      *
      * @throws InvalidArgumentException When argument given doesn't exist
      */
@@ -84,8 +83,8 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string $name The argument name
-     * @param string|string[]|null $value The argument value
+     * @param string               $name  The argument name
+     * @param null|string|string[] $value The argument value
      *
      * @throws InvalidArgumentException When argument given doesn't exist
      */
@@ -95,7 +94,7 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string|int $name The InputArgument name or position
+     * @param int|string $name The InputArgument name or position
      *
      * @return bool true if the InputArgument object exists, false otherwise
      */
@@ -115,7 +114,7 @@ class InputProxy implements InputInterface
     /**
      * @param string $name The option name
      *
-     * @return string|string[]|bool|null The option value
+     * @return null|bool|string|string[] The option value
      *
      * @throws InvalidArgumentException When option given doesn't exist
      */
@@ -125,8 +124,8 @@ class InputProxy implements InputInterface
     }
 
     /**
-     * @param string $name The option name
-     * @param string|string[]|bool|null $value The option value
+     * @param string                    $name  The option name
+     * @param null|bool|string|string[] $value The option value
      *
      * @throws InvalidArgumentException When option given doesn't exist
      */
@@ -145,9 +144,6 @@ class InputProxy implements InputInterface
         return $this->input->hasOption($name);
     }
 
-    /**
-     * @return bool
-     */
     public function isInteractive(): bool
     {
         return $this->input->isInteractive();
