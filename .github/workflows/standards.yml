@@ -21,7 +21,7 @@ jobs:
         run: composer cs-fixer-dry-run
 
   phpcs:
-    name: PHPCS - PHP ${{ matrix.php-versions }} ${{ matrix.operating-system }}
+    name: PHPCS - PHP ${{ matrix.php-versions }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
@@ -38,7 +38,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
 
       - name: Download dependencies
-        uses: php-actions/composer@v2
+        uses: php-actions/composer@v6
         with:
           args: --ignore-platform-reqs --quiet
 
