@@ -8,11 +8,11 @@ on:
 
 jobs:
   unit:
-    name: PHPUnit unit tests - PHP ${{ matrix.php-versions }} ${{ matrix.operating-system }}
+    name: PHPUnit unit tests - PHP ${{ matrix.php-versions }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.4', '8']
+        php-versions: ['8.2', '8.3', '8.4']
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
         run: php -v
 
       - name: Download dependencies
-        uses: php-actions/composer@v2
+        uses: php-actions/composer@v6
         with:
           args: --ignore-platform-reqs --quiet
 
