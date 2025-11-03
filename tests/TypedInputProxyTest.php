@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace webignition\SymfonyConsole\TypedInput\Tests;
 
 use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use webignition\SymfonyConsole\TypedInput\TypedInput;
 
-class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
+class TypedInputProxyTest extends TestCase
 {
     /**
      * @var InputInterface
@@ -25,6 +26,13 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->typedInput = new TypedInput($this->sourceInput);
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        \Mockery::close();
+    }
+
     public function testGetFirstArgument(): void
     {
         $firstArgument = 'first argument';
@@ -33,7 +41,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('getFirstArgument')
                 ->withNoArgs()
-                ->andReturn($firstArgument);
+                ->andReturn($firstArgument)
+            ;
         });
 
         $this->assertEquals($firstArgument, $this->typedInput->getFirstArgument());
@@ -49,7 +58,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('hasParameterOption')
                 ->with($values, $onlyParams)
-                ->andReturn($hasParameterOption);
+                ->andReturn($hasParameterOption)
+            ;
         });
 
         $this->assertEquals($hasParameterOption, $this->typedInput->hasParameterOption($values, $onlyParams));
@@ -66,7 +76,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('getParameterOption')
                 ->with($values, $default, $onlyParams)
-                ->andReturn($option);
+                ->andReturn($option)
+            ;
         });
 
         $this->assertEquals($option, $this->typedInput->getParameterOption($values, $default, $onlyParams));
@@ -79,7 +90,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($inputDefinition) {
             $mock
                 ->shouldReceive('bind')
-                ->with($inputDefinition);
+                ->with($inputDefinition)
+            ;
         });
 
         $this->typedInput->bind($inputDefinition);
@@ -90,7 +102,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
     {
         $this->applyMockCalls(function (MockInterface $mock) {
             $mock
-                ->shouldReceive('validate');
+                ->shouldReceive('validate')
+            ;
         });
 
         $this->typedInput->validate();
@@ -104,7 +117,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($arguments) {
             $mock
                 ->shouldReceive('getArguments')
-                ->andReturn($arguments);
+                ->andReturn($arguments)
+            ;
         });
 
         $this->assertEquals($arguments, $this->typedInput->getArguments());
@@ -119,7 +133,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('getArgument')
                 ->with($name)
-                ->andReturn($value);
+                ->andReturn($value)
+            ;
         });
 
         $this->assertEquals($value, $this->typedInput->getArgument($name));
@@ -133,7 +148,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($name, $value) {
             $mock
                 ->shouldReceive('setArgument')
-                ->with($name, $value);
+                ->with($name, $value)
+            ;
         });
 
         $this->typedInput->setArgument($name, $value);
@@ -149,7 +165,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('hasArgument')
                 ->with($name)
-                ->andReturn($hasArgument);
+                ->andReturn($hasArgument)
+            ;
         });
 
         $this->assertEquals($hasArgument, $this->typedInput->hasArgument($name));
@@ -162,7 +179,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($options) {
             $mock
                 ->shouldReceive('getOptions')
-                ->andReturn($options);
+                ->andReturn($options)
+            ;
         });
 
         $this->assertEquals($options, $this->typedInput->getOptions());
@@ -177,7 +195,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('getOption')
                 ->with($name)
-                ->andReturn($value);
+                ->andReturn($value)
+            ;
         });
 
         $this->assertEquals($value, $this->typedInput->getOption($name));
@@ -191,7 +210,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($name, $value) {
             $mock
                 ->shouldReceive('setOption')
-                ->with($name, $value);
+                ->with($name, $value)
+            ;
         });
 
         $this->typedInput->setOption($name, $value);
@@ -207,7 +227,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
             $mock
                 ->shouldReceive('hasOption')
                 ->with($name)
-                ->andReturn($hasOption);
+                ->andReturn($hasOption)
+            ;
         });
 
         $this->assertEquals($hasOption, $this->typedInput->hasOption($name));
@@ -220,7 +241,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($isInteractive) {
             $mock
                 ->shouldReceive('isInteractive')
-                ->andReturn($isInteractive);
+                ->andReturn($isInteractive)
+            ;
         });
 
         $this->assertEquals($isInteractive, $this->typedInput->isInteractive());
@@ -233,7 +255,8 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         $this->applyMockCalls(function (MockInterface $mock) use ($interactive) {
             $mock
                 ->shouldReceive('setInteractive')
-                ->with($interactive);
+                ->with($interactive)
+            ;
         });
 
         $this->typedInput->setInteractive($interactive);
@@ -245,12 +268,5 @@ class TypedInputProxyTest extends \PHPUnit\Framework\TestCase
         if ($this->sourceInput instanceof MockInterface) {
             $callable($this->sourceInput);
         }
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        \Mockery::close();
     }
 }

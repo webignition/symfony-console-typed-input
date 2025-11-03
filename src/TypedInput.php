@@ -61,11 +61,8 @@ class TypedInput extends InputProxy implements InputInterface
 
     /**
      * @param mixed $value
-     * @param int|null $default
-     *
-     * @return int
      */
-    private function getIntegerValue($value, int $default = null): int
+    private function getIntegerValue($value, ?int $default = null): int
     {
         if (!is_int($value) && !ctype_digit($value) && null !== $default) {
             return $default;
@@ -80,8 +77,6 @@ class TypedInput extends InputProxy implements InputInterface
 
     /**
      * @param mixed $value
-     *
-     * @return bool
      */
     private function getBooleanValue($value): bool
     {
@@ -94,9 +89,6 @@ class TypedInput extends InputProxy implements InputInterface
 
     /**
      * @param mixed $value
-     * @param string|null $default
-     *
-     * @return string|null
      */
     private function getStringValue($value, ?string $default = null): ?string
     {

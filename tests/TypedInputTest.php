@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyConsole\TypedInput\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use webignition\SymfonyConsole\TypedInput\TypedInput;
 
-class TypedInputTest extends \PHPUnit\Framework\TestCase
+class TypedInputTest extends TestCase
 {
     public function testWrapTypedInput(): void
     {
@@ -23,8 +24,6 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param mixed $source
-     * @param int|null $default
-     * @param int $expectedValue
      *
      * @dataProvider getIntegerValueDataProvider
      */
@@ -43,8 +42,6 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param mixed $source
-     * @param int|null $default
-     * @param int $expectedValue
      *
      * @dataProvider getIntegerValueDataProvider
      */
@@ -62,7 +59,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getIntegerValueDataProvider(): array
     {
@@ -112,7 +109,6 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param mixed $source
-     * @param bool $expectedValue
      *
      * @dataProvider getBooleanValueDataProvider
      */
@@ -131,7 +127,6 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param mixed $source
-     * @param bool $expectedValue
      *
      * @dataProvider getBooleanValueDataProvider
      */
@@ -149,7 +144,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getBooleanValueDataProvider(): array
     {
@@ -179,8 +174,6 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param mixed $source
-     * @param string|null $default
-     * @param string|null $expectedValue
      *
      * @dataProvider getStringValueDataProvider
      */
@@ -199,8 +192,6 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param mixed $source
-     * @param string|null $default
-     * @param string|null $expectedValue
      *
      * @dataProvider getStringValueDataProvider
      */
@@ -218,7 +209,7 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getStringValueDataProvider(): array
     {
@@ -267,11 +258,9 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $mockedMethodName
      * @param mixed $source
      * @param mixed $default
      * @param mixed $expectedValue
-     * @param callable $valueGetter
      */
     private function assertGetValue(
         string $mockedMethodName,
@@ -286,7 +275,8 @@ class TypedInputTest extends \PHPUnit\Framework\TestCase
         $input
             ->shouldReceive($mockedMethodName)
             ->with($name)
-            ->andReturn($source);
+            ->andReturn($source)
+        ;
 
         $typedInput = new TypedInput($input);
 
