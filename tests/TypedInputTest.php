@@ -61,7 +61,7 @@ class TypedInputTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getIntegerValueDataProvider(): array
+    public static function getIntegerValueDataProvider(): array
     {
         return [
             'int' => [
@@ -146,7 +146,7 @@ class TypedInputTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getBooleanValueDataProvider(): array
+    public static function getBooleanValueDataProvider(): array
     {
         return [
             'empty array' => [
@@ -211,7 +211,7 @@ class TypedInputTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getStringValueDataProvider(): array
+    public static function getStringValueDataProvider(): array
     {
         return [
             'int' => [
@@ -282,6 +282,6 @@ class TypedInputTest extends TestCase
 
         $value = $valueGetter($typedInput, $default);
 
-        $this->assertSame($expectedValue, $value);
+        self::assertSame($expectedValue, $value);
     }
 }
