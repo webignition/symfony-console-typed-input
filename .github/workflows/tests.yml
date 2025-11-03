@@ -8,28 +8,37 @@ on:
 
 jobs:
   unit:
-    name: PHPUnit unit tests - PHP ${{ matrix.php-versions }}
+    name: PHPUnit unit tests - PHP ${{ matrix.php-versions }} - ${{ matrix.dependencies }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['8.3', '8.4']
+        dependencies: ['latest', 'lowest']
     runs-on: ${{ matrix.operating-system }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup php
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
+          tools: composer:v2
+          coverage: none
 
       - name: Check PHP Version
         run: php -v
 
-      - name: Download dependencies
-        uses: php-actions/composer@v6
-        with:
-          args: --ignore-platform-reqs --quiet
+      - name: Install dependencies (latest)
+        if: matrix.dependencies == 'latest'
+        run: |
+          composer update --ignore-platform-reqs --quiet
+
+      - name: Install dependencies (lowest)
+        if: matrix.dependencies == 'lowest'
+        run: |
+          composer update --prefer-lowest --ignore-platform-reqs --quiet
 
       - name: Run PHPUnit unit tests
         run: composer test
